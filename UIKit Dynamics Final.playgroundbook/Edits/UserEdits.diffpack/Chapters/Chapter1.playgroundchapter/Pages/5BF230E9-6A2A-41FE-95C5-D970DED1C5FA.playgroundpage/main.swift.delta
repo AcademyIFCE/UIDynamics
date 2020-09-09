@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import UIKit
+import PlaygroundSupport
+
+class PushBehaviorViewController: DynamicsViewController {
+    
+    override func addDynamics() {
+        super.addDynamics()
+        
+        addAttachmentBehavior()
+        
+        //Definindo o UIPushBehavior do tipo continuous, que, quando está ativo, continua constantemente puxando o Dynamic Item para a direção ou angulo configurado 
+        self.continuousPushBehavior = UIPushBehavior(
+            items: [pendulumBar], 
+            mode: .continuous 
+        )
+        continuousPushBehavior.pushDirection = .init(dx: 0, dy: 1)
+        continuousPushBehavior.magnitude = 100
+        continuousPushBehavior.active = false
+        animator.addBehavior(continuousPushBehavior)
+        
+        //Definindo o UIPushBehavior do tipo instantaneous, que, quando está ativo, impulsiona uma vez o Dynamic Item para a direção ou angulo configurado
+        self.instantaneousPushBehavior = UIPushBehavior(
+            items: [self.pendulumBar], 
+            mode: .instantaneous
+        )
+        instantaneousPushBehavior.angle = 90
+        instantaneousPushBehavior.magnitude = 100
+        instantaneousPushBehavior.active = false
+        self.animator.addBehavior(instantaneousPushBehavior)
+        
+        //Definição do timer para de 3 em 3 segundos alternar entre os dois tipos de Push.
+        let crazyPendulum = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { _ in
+            if self.continuousPushBehavior.active {
+                self.pendulumBar.backgroundColor = .yellow
+                self.continuousPushBehavior.active = false 
+                self.instantaneousPushBehavior.active = true
+            } else {
+                self.pendulumBar.backgroundColor = UIColor.gray.withAlphaComponent(0.8)
+                self.continuousPushBehavior.active = true 
+                self.instantaneousPushBehavior.active = false
+            }
+        })
+        crazyPendulum.fire()
+    }
+    
+}
+
+PlaygroundPage.current.liveView = PushBehaviorViewController()
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 2025}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

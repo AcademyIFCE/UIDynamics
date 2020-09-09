@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>
+import UIKit
+import PlaygroundSupport
+
+class SnapBehaviorViewController: DynamicsViewController {
+    
+    override func addDynamics() {
+        super.addDynamics()
+        
+        //Guardando a posição inicial dos Dynamic Items
+        let initialPositionClockBox = self.clockBox.center
+        let initialPositionPendulumBar = self.pendulumBar.center
+        let initialPositionPendulum = self.pendulum.center
+        
+        //Movendo os Dynamic Items para fora da área visível da view
+        self.clockBox.center.y -= 300
+        self.pendulum.center.y -= 300
+        self.pendulumBar.center.y -= 300
+        
+        //Definindo todos um UISnapBehavior para cada Dynamic Item.
+        let snapClockBoxBehavior = UISnapBehavior(
+            item: self.clockBox, 
+            snapTo: initialPositionClockBox
+        )
+        //Setando o damping de cada UISnapBehavior
+        //Quanto mais damping menos o Dynamic Item vai oscilar na chegada ao SnapPoint
+        snapClockBoxBehavior.damping = 0.2
+        self.animator.addBehavior(snapClockBoxBehavior)
+        
+        let snapPendulumBarBehavior = UISnapBehavior(
+            item: self.pendulumBar, 
+            snapTo: initialPositionPendulumBar
+        )
+        snapPendulumBarBehavior.damping = 0.2
+        self.animator.addBehavior(snapPendulumBarBehavior)
+        
+        let snapPendulumBehavior = UISnapBehavior(
+            item: self.pendulum, 
+            snapTo: initialPositionPendulum
+        )
+        snapPendulumBehavior.damping = 0.2
+        self.animator.addBehavior(snapPendulumBehavior)
+    
+        //Adicionando Behaviors após o Snap
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { 
+            //Removendo os UISnapBehaviors para conseguir criar os Attachments Corretamente
+            self.animator.removeBehavior(snapClockBoxBehavior)
+            self.animator.removeBehavior(snapPendulumBehavior)
+            self.animator.removeBehavior(snapPendulumBarBehavior)
+            
+            self.addAttachmentBehavior()
+            self.addPushBehavior()
+        }
+        
+    }
+    
+}
+
+PlaygroundPage.current.liveView = SnapBehaviorViewController()
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 2152}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

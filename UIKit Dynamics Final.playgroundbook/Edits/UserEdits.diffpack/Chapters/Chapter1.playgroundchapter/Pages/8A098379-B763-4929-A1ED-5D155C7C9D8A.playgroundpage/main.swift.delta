@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>
+
+import UIKit
+import PlaygroundSupport
+
+class CollisionBehaviorViewController: DynamicsViewController {
+    
+    override func addDynamics() {
+        super.addDynamics()
+        
+        addGravityBehavior(dx: 1, dy: 0)
+        addAttachmentBehavior()
+        
+        //Definindo um UICollisionBehavior entre o pendulum e o clockBox
+        self.collisionBehavior = UICollisionBehavior(
+            items: [pendulum, clockBox]
+        )
+        //Assinando collisionDelegate para detectar começo e fim da colisão.
+        collisionBehavior.collisionDelegate = self
+        animator.addBehavior(collisionBehavior)
+        
+    }
+    
+}
+
+extension CollisionBehaviorViewController: UICollisionBehaviorDelegate {
+    
+    //funcão que é chamada no início da colisão do tipo everything
+    func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item1: UIDynamicItem, with item2: UIDynamicItem, at p: CGPoint) {
+        pendulum.backgroundColor = UIColor.yellow.withAlphaComponent(0.8)
+        gravityBehavior.gravityDirection.dx *= -1
+    }
+    
+    //funcão que é chamada no fim da colisão do tipo everything
+    func collisionBehavior(_ behavior: UICollisionBehavior, endedContactFor item1: UIDynamicItem, with item2: UIDynamicItem) {
+        pendulum.backgroundColor = UIColor.gray.withAlphaComponent(0.8)
+    }
+    
+}
+
+PlaygroundPage.current.liveView = CollisionBehaviorViewController()
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 1406}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

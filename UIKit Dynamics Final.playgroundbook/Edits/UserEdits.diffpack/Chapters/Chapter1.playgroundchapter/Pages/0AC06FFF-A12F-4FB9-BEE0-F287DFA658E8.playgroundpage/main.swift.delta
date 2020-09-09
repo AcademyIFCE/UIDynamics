@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import UIKit
+import PlaygroundSupport
+
+public class GravityBehaviorViewController: DynamicsViewController {
+    
+    override public func addDynamics() {
+        super.addDynamics()
+        
+        //UIGravityBehavior faz com que os Dynamic Items sejam atraídos para alguma direção
+        self.gravityBehavior = UIGravityBehavior(
+            items: [ clockBox, pendulumBar, pendulum ]
+        )
+        
+        //direção da gravidade
+        gravityBehavior.gravityDirection = .init(dx: 0, dy: 1)
+        
+        //adicionando behavior ao animator, para que ele anime os Dynamic Items
+        animator.addBehavior(gravityBehavior)
+    }
+    
+}
+
+PlaygroundPage.current.liveView = GravityBehaviorViewController()
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 716}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

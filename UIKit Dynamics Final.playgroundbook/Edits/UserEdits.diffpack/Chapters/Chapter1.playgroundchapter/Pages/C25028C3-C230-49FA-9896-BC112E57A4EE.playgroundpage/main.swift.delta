@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>
+import UIKit
+import PlaygroundSupport
+
+class AttachmentBehaviorViewController: DynamicsViewController {
+    
+    override func addDynamics() {
+        super.addDynamics()
+        
+        addGravityBehavior(dx: 1, dy: 1)
+        
+        //MARK: - Fixando Dynamic Item na Parent View
+        //Fixando o clockBox na view
+        let clockBoxToViewDynamicBehavior = UIDynamicItemBehavior(items: [ clockBox ])
+        clockBoxToViewDynamicBehavior.isAnchored = true
+        //Adicionando no animator
+        animator.addBehavior(clockBoxToViewDynamicBehavior)
+        self.anchoredItemBehavior = clockBoxToViewDynamicBehavior
+        
+        //MARK: - PinAttachment
+        //Definindo um UIAttachmentBehavior do tipo pin do pendulumBar para a clockBox
+        let pendulumBarToClockBoxAttachmentBehavior = UIAttachmentBehavior.pinAttachment(
+            with: pendulumBar, 
+            attachedTo: clockBox, 
+            attachmentAnchor: CGPoint(
+                x: clockBox.frame.midX, 
+                y: clockBox.frame.maxY
+            )
+        )
+        //Quanto maior o frictionTorque, mais dificuldade o objeto terá de se mover ao redor do pinAttachment
+        pendulumBarToClockBoxAttachmentBehavior.frictionTorque = .zero
+        //Adicionando ao Animator
+        animator.addBehavior(pendulumBarToClockBoxAttachmentBehavior)
+        self.pinAttachmentBehavior = pendulumBarToClockBoxAttachmentBehavior
+        
+        //MARK: - FixedAttachment
+        //Definindo um UIAttachmentBehavior do tipo fixed do pendulumBar para o pendulum
+        let pendulumToPendulumBarAttachmentBehavior = UIAttachmentBehavior.fixedAttachment(
+            with: pendulum, 
+            attachedTo: pendulumBar, 
+            attachmentAnchor: CGPoint(
+                x: pendulumBar.frame.midX, 
+                y: pendulumBar.frame.maxY
+            )
+        )
+        //Adicionando ao Animator
+        animator.addBehavior(pendulumToPendulumBarAttachmentBehavior)
+        self.fixedAttachmentBehavior = pendulumToPendulumBarAttachmentBehavior
+        
+        //MARK: - Hora de brincar
+        //Modifique a direção da gravidade na função addGravity para ver o pendulo girando
+    }
+    
+}
+
+PlaygroundPage.current.liveView = AttachmentBehaviorViewController()
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 2255}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
